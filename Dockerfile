@@ -1,77 +1,54 @@
 FROM php:8.3-fpm-alpine
 
-ARG NODE_VERSION=20
-
 WORKDIR /var/www/html
 
-RUN apk update && apk upgrade --no-cache \
+RUN apk update --no-cache \
+    && apk upgrade --no-cache \
     && apk add --no-cache \
+        autoconf \
         curl \
-        git \
-        libzip-dev \
-        zip \
-        unzip \
-        sqlite-dev \
-        libpq-dev \
-        # postgresql-client \
-        # mariadb-client \
-        # mariadb \
-        memcached \
-        oniguruma-dev \
+        freetype-dev \
+        g++ \
         icu-dev \
         imagemagick-dev \
-        g++ \
-        make \
-        autoconf \
-        libxml2-dev \
+        imap-dev \
+        libjpeg-turbo-dev \
+        libmemcached-dev \
         libpng-dev \
+        libpq-dev \
+        libwebp-dev\
+        libxml2-dev \
+        libzip-dev \
         linux-headers \
+        make \
+        zlib-dev \
+    && pecl install \
+        imagick-3.7.0 \
+        memcache-8.2 \
+        memcached-3.2.0 \
+        redis-6.0.2 \
+        xdebug-3.3.2 \
+    && docker-php-ext-configure \
+        gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install \
-        pdo_mysql \
-        pdo_sqlite \
-        pdo_pgsql \
         bcmath \
+        exif \
         gd \
-        mbstring \
-        xml \
+        imap \
         intl \
-    && pecl install imagick redis xdebug \
+        pdo_mysql \
+        pdo_pgsql \
+        soap \
+        zip \
     && docker-php-ext-enable \
         imagick \
+        memcache \
+        memcached \
         redis \
         xdebug \
-    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && alias composer='php /usr/local/bin/composer' \
+    && curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && apk add --no-cache nodejs npm \
     && npm install -g npm \
-    && npm install -g pnpm \
-    && apk del --no-cache
+    && npm install -g pnpm
 
-EXPOSE 80/tcp
-
-
-
-# RUN apt-get update && apt-get install -y \
-#     curl \
-#     git \
-#     unzip \
-#     libzip-dev \
-#     libonig-dev \
-#     libxml2-dev \
-#     libpq-dev \
-#     imagemagick \
-#     mariadb-client \
-#     && docker-php-ext-install \
-#     pdo_mysql \
-#     pdo_sqlite \
-#     pdo_pgsql \
-#     zip \
-#     bcmath \
-#     exif \
-#     gd \
-#     mbstring \
-#     openssl \
-#     xml \
-#     opcache \
-#     && pecl install redis \
-#     && docker-php-ext-enable redis
+EXPOSE 9000
