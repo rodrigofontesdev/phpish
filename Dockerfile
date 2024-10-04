@@ -36,6 +36,7 @@ RUN apk update --no-cache \
         gd \
         imap \
         intl \
+        opcache \
         pdo_mysql \
         pdo_pgsql \
         soap \
@@ -45,10 +46,11 @@ RUN apk update --no-cache \
         memcache \
         memcached \
         redis \
+        opcache \
         xdebug \
     && curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && apk add --no-cache nodejs npm \
     && npm install -g npm \
     && npm install -g pnpm
 
-EXPOSE 9000
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
