@@ -12,6 +12,6 @@
 - [X] npm
 - [X] pnpm
 
-## TODOs
+## TODO
 
 - [ ] Use ARG in Dockerfile to manage the version of images and packages
