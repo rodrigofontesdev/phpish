@@ -1,2 +1,5 @@
 README.md
-**/.git
+.env*
+.git
+.gitignore
+docker-compose.yml
