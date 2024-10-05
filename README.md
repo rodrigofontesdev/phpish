@@ -10,8 +10,9 @@
 -   [x] Composer
 -   [x] Node LTS
 -   [x] npm
--   [x] pnpm
 
 ## TODO
 
 -   [ ] Use ARG in Dockerfile to manage the version of images and packages
+-   [ ] Fix files and folders privilegies
+-   [ ] Enhance server security in nginx.conf
