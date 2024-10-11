@@ -1,5 +1,5 @@
 services:
-    app:
+    php-fpm:
         build: ./docker
         image: phpish:1.1.0
         volumes:
@@ -8,7 +8,7 @@ services:
             - mainnet
         depends_on:
             - postgres
-    server:
+    nginx:
         image: nginx:1.27-alpine
         restart: always
         volumes:
@@ -19,7 +19,17 @@ services:
         networks:
             - mainnet
         depends_on:
-            - app
+            - php-fpm
+    node:
+        image: node:20.18.0-alpine
+        working_dir: /var/www/html
+        volumes:
+            - ./app:/var/www/html
+        environment:
+            - NODE_ENV=development
+        command: ['sleep', 'infinity']
+        networks:
+            - mainnet
     postgres:
         image: 'postgres:16-alpine'
         restart: always

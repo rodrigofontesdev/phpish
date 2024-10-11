@@ -28,9 +28,10 @@ RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/loca
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"
-COPY /php/php.ini "$PHP_INI_DIR/conf.d/99_extra.ini"
 
+COPY /php/php.ini "$PHP_INI_DIR/conf.d/99_extra.ini"
 COPY /supervisord/supervisord.conf /etc/supervisord.conf
+
 RUN chown -R www-data:www-data /var/log /run
 
 USER www-data
