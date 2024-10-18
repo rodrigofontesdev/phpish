@@ -5,13 +5,28 @@
 
 # Prerequisites
 
-- Docker
-- Git
+-   Docker
+-   Git
 
 # Getting Started
 
-> [!IMPORTANT]
-> TODO
+Clone the repository into a new directory:
+
+```sh
+git clone git@github.com:rodrigofontesdev/phpish.git example-app
+```
+
+```sh
+cd example-app
+```
+
+Run Docker services:
+
+```sh
+docker compose up -d
+```
+
+Now, you are able to create a new Laravel project inside the container. See the [How to Use section](#how-to-use).
 
 # Features
 
@@ -21,22 +36,89 @@
 -   [x] Supervisord
 -   [x] PostgreSQL 16
 -   [x] SQLite 3
--   [ ] Redis
 -   [x] Node 20
--   [x] NPM
+-   [x] npm
 
-# I've Learned
+# How to Use
+
+In this part, you will learn how to work properly with the **PHPISH** and be able to interact correctly with your Laravel application.
+
+> [!NOTE]
+> It's not necessary to push the **PHPISH** files to your project's remote repository.
+
+### Install Laravel With Composer
+
+Open an interactive shell for the **php-fpm service**:
+
+```sh
+docker exec -it example-app-php-fpm-1 sh
+```
+
+Execute the follow command into the **php-fpm service** shell:
+
+```sh
+composer create-project laravel/laravel .
+```
+
+After the installation finish, open your browser and visit [http://localhost](http://localhost).
+
+### Install Laravel With Laravel Installer
 
 > [!IMPORTANT]
 > TODO
 
-# Todo
+### Clone an Existing Laravel Project
+
+Clone your Laravel project into the `app` folder. Please, ensure that you have the following folder structure `/app/public/index.php`.
+
+```sh
+git clone git@github.com:username/repo-name.git app
+```
+
+Open an interactive shell for the **php-fpm service**:
+
+```sh
+docker exec -it example-app-php-fpm-1 sh
+```
+
+Install the project dependencies.
+
+```sh
+composer install
+```
+
+After that dependencies are installed, open your browser and visit [http://localhost](http://localhost).
+
+### Asset Bundling
+
+Open an interactive shell for the **node service**:
+
+```sh
+docker exec -it example-app-node-1 sh
+```
+
+Now, you are capable to work with **npm**.
+
+```sh
+npm install
+```
+
+```sh
+npm run dev
+```
+
+```sh
+npm run build
+```
+
+# Coming Soon
 
 -   [ ] Check containers health on startup
+-   [ ] Redis
 
 # Built With
 
-- Docker
+-   Docker
 
 # License
 

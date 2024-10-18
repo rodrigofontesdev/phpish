@@ -23,6 +23,7 @@ services:
     node:
         image: node:20.18.0-alpine
         working_dir: /var/www/html
+        user: 'node'
         volumes:
             - ./app:/var/www/html
         environment:
