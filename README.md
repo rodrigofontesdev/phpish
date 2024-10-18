@@ -5,13 +5,16 @@
 
 # Prerequisites
 
-- Docker
-- Git
+-   Docker
+-   Git
 
 # Getting Started
 
-> [!IMPORTANT]
-> TODO
+-   Clone the repository (`git clone git@github.com:rodrigofontesdev/phpish.git example-app`)
+-   Enter the project folder (`cd example-app`)
+-   Run Docker containers (`docker compose up -d`)
+-   Open an interactive shell on the PHP-FPM container (`docker exec -it example-app-php-fpm-1 sh`)
+-   Install the Laravel Installer on the PHP-FPM container (`composer global require laravel/installer`)
 
 # Features
 
@@ -21,14 +24,8 @@
 -   [x] Supervisord
 -   [x] PostgreSQL 16
 -   [x] SQLite 3
--   [ ] Redis
 -   [x] Node 20
--   [x] NPM
-
-# I've Learned
-
-> [!IMPORTANT]
-> TODO
+-   [x] npm
 
 # Todo
 
@@ -36,7 +33,7 @@
 
 # Built With
 
-- Docker
+-   Docker
 
 # License
 
