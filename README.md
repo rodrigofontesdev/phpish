@@ -91,9 +91,10 @@ npm run dev
 npm run build
 ```
 
-# Todo
+# Coming Soon
 
 -   [ ] Check containers health on startup
+-   [ ] Redis
 
 # Built With
 
