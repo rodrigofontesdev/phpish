@@ -72,7 +72,7 @@ After the installation finish, open your browser and visit [http://localhost](ht
 Clone your Laravel project into the `app` folder. Please, ensure that you have the following folder structure `/app/public/index.php`.
 
 ```sh
-git clone git@github.com:rodrigofontesdev/brutus-api.git app
+git clone git@github.com:username/repo-name.git app
 ```
 
 Open an interactive shell for the **php-fpm service**:
