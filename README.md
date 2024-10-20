@@ -113,8 +113,10 @@ npm run build
 
 # Coming Soon
 
--   [ ] Check containers health on startup
+-   [ ] Check services health on startup
 -   [ ] Redis
+-   [ ] Possibility to work with others PHP versions
+-   [ ] Possibility to use in production environment
 
 # Built With
 
