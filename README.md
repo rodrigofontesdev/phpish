@@ -44,7 +44,7 @@ Now, you are able to create a new Laravel project inside the container. See the 
 In this part, you will learn how to work properly with the **PHPISH** and be able to interact correctly with your Laravel application.
 
 > [!NOTE]
-> It's not necessary to push the **PHPISH** files to your project's repository.
+> It's not necessary to push the **PHPISH** files to your project's remote repository.
 
 ### Install Laravel With Composer
 
