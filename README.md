@@ -26,12 +26,6 @@ Run Docker services:
 docker compose up -d
 ```
 
-Open an interactive shell for the **php-fpm service**:
-
-```sh
-docker exec -it example-app-php-fpm-1 sh
-```
-
 Now, you are able to create a new Laravel project inside the container. See the [How to Use section](#how-to-use).
 
 # Features
@@ -49,7 +43,16 @@ Now, you are able to create a new Laravel project inside the container. See the 
 
 In this part, you will learn how to work properly with the **PHPISH** and be able to interact correctly with your Laravel application.
 
+> [!NOTE]
+> It's not necessary to push the **PHPISH** files to your project's repository.
+
 ### Install Laravel With Composer
+
+Open an interactive shell for the **php-fpm service**:
+
+```sh
+docker exec -it example-app-php-fpm-1 sh
+```
 
 Execute the follow command into the **php-fpm service** shell:
 
@@ -66,8 +69,25 @@ After the installation finish, open your browser and visit [http://localhost](ht
 
 ### Clone an Existing Laravel Project
 
-> [!IMPORTANT]
-> TODO
+Clone your Laravel project into the `app` folder. Please, ensure that you have the following folder structure `/app/public/index.php`.
+
+```sh
+git clone git@github.com:rodrigofontesdev/brutus-api.git app
+```
+
+Open an interactive shell for the **php-fpm service**:
+
+```sh
+docker exec -it example-app-php-fpm-1 sh
+```
+
+Install the project dependencies.
+
+```sh
+composer install
+```
+
+After that dependencies are installed, open your browser and visit [http://localhost](http://localhost).
 
 ### Asset Bundling
 
