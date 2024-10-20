@@ -1,14 +1,13 @@
 # PHPISH
 
-> [!IMPORTANT]
-> TODO
+Develop Laravel applications faster with this pre-configured Docker image. It includes PHP, Nginx, and PostgreSQL, so you can start coding without installing or configuring anything locally.
 
-# Prerequisites
+## Prerequisites
 
 -   Docker
 -   Git
 
-# Getting Started
+## Getting Started
 
 Clone the repository into a new directory:
 
@@ -28,7 +27,7 @@ docker compose up -d
 
 Now, you are able to create a new Laravel project inside the container. See the [How to Use section](#how-to-use).
 
-# Features
+## Features
 
 -   [x] PHP 8.3
 -   [x] Composer
@@ -39,7 +38,7 @@ Now, you are able to create a new Laravel project inside the container. See the 
 -   [x] Node 20
 -   [x] npm
 
-# How to Use
+## How to Use
 
 In this part, you will learn how to work properly with the **PHPISH** and be able to interact correctly with your Laravel application.
 
@@ -111,17 +110,28 @@ npm run dev
 npm run build
 ```
 
-# Coming Soon
+### Change PHP Configuration Settings
+
+> [!IMPORTANT]
+> TODO
+
+### Use PostgreSQL as Database
+
+> [!IMPORTANT]
+> TODO
+
+## Coming Soon
 
 -   [ ] Check services health on startup
 -   [ ] Redis
--   [ ] Possibility to work with others PHP versions
--   [ ] Possibility to use in production environment
+-   [ ] Work with others PHP versions
+-   [ ] Use in production environment
+-   [ ] Plug and play services
 
-# Built With
+## Built With
 
 -   Docker
 
-# License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
