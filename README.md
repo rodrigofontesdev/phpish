@@ -1,6 +1,6 @@
 # PHPISH
 
-Develop Laravel applications faster with this pre-configured Docker image. It includes PHP, Nginx, and PostgreSQL, so you can start coding without installing or configuring anything locally.
+Develop Laravel applications faster with this pre-configured Docker image. It includes PHP, Nginx, PostgreSQL and Redis, so you can start coding without installing or configuring anything locally.
 
 ## Prerequisites
 
@@ -35,6 +35,7 @@ Now, you are able to create a new Laravel project inside the container. See the 
 -   [x] Supervisord
 -   [x] PostgreSQL 16
 -   [x] SQLite 3
+-   [x] Redis
 -   [x] Node 20
 -   [x] npm
 
@@ -120,10 +121,14 @@ npm run build
 > [!IMPORTANT]
 > TODO
 
+### Use Redis as Database
+
+> [!IMPORTANT]
+> TODO
+
 ## Coming Soon
 
 -   [ ] Check services health on startup
--   [ ] Redis
 -   [ ] Work with others PHP versions
 -   [ ] Use in production environment
 -   [ ] Plug and play services
