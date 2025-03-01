@@ -1,7 +1,7 @@
 services:
     php-fpm:
         build: ./docker
-        image: phpish:1.2.0
+        image: phpish:1.2.1
         volumes:
             - ./app:/var/www/html
         networks:

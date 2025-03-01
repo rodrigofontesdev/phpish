@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.2.1 - 2025-02-28
+
+### Fixed
+
+- Composer download
+
 ## v1.2.0 - 2024-11-03
 
 ### Added
