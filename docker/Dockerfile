@@ -26,7 +26,7 @@ RUN apk del \
     make
 
 RUN curl -sSL https://getcomposer.org/installer \
-    && php -- --install-dir=/usr/local/bin --filename=composer
+    | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"
