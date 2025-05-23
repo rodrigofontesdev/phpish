@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.3.0 - 2025-05-22
+
+### Added
+
+- Add pcntl PHP extension
+
 ## v1.2.2 - 2025-05-22
 
 ### Fixed

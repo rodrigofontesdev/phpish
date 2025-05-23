@@ -13,6 +13,7 @@ RUN apk update --no-cache \
     redis-6.1.0 \
     xdebug-3.3.2 \
     && docker-php-ext-install \
+    pcntl \
     pdo_mysql \
     pdo_pgsql \
     && docker-php-ext-enable \
