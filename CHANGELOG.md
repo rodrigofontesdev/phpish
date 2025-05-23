@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.2.2 - 2025-05-22
+
+### Fixed
+
+- Protect against sensitive data leaks in containers
+
 ## v1.2.1 - 2025-02-28
 
 ### Fixed
