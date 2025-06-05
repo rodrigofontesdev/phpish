@@ -1,6 +1,8 @@
+.cursor
 /docker/Dockerfile
 docker-compose.yml
 .git
 .gitignore
+CHANGELOG.md
 LICENSE
 README.md
