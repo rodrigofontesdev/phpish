@@ -1,4 +1,8 @@
-FROM php:8.3-fpm-alpine
+ARG PHP_VERSION=8.3
+FROM php:${PHP_VERSION}-fpm-alpine
+
+ARG XDEBUG_VERSION=3.3.2
+ARG REDIS_VERSION=6.1.0
 
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
@@ -10,8 +14,8 @@ RUN apk update --no-cache \
     make \
     supervisor \
     && pecl install \
-    redis-6.1.0 \
-    xdebug-3.3.2 \
+    redis-${REDIS_VERSION} \
+    xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-install \
     pcntl \
     pdo_mysql \
