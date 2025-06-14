@@ -5,8 +5,9 @@ services:
       context: ./docker
       args:
         PHP_VERSION: 8.3
+        COMPOSER_VERSION: 2.8.9
         XDEBUG_VERSION: 3.3.2
-        REDIS_VERSION: 6.1.0
+        REDIS_VERSION: 6.1.0        
     volumes:
       - ./web:/var/www/html
     ports:

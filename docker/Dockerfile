@@ -3,6 +3,7 @@ FROM php:${PHP_VERSION}-fpm-alpine
 
 ARG XDEBUG_VERSION=3.3.2
 ARG REDIS_VERSION=6.1.0
+ARG COMPOSER_VERSION=2.8.9
 
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
@@ -31,7 +32,7 @@ RUN apk del \
     make
 
 RUN curl -sSL https://getcomposer.org/installer \
-    | php -- --install-dir=/usr/local/bin --filename=composer
+    | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION}
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"
