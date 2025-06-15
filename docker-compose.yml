@@ -90,11 +90,11 @@ services:
 
 secrets:
   DB_DATABASE:
-    file: ./web/.env
+    environment: DB_DATABASE
   DB_USERNAME:
-    file: ./web/.env
+    environment: DB_USERNAME
   DB_PASSWORD:
-    file: ./web/.env
+    environment: DB_PASSWORD
 
 networks:
   mainnet:
