@@ -3,6 +3,5 @@
 docker-compose.yml
 .git
 .gitignore
-CHANGELOG.md
+*.md
 LICENSE
-README.md

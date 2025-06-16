@@ -1,0 +1,74 @@
+---
+description: Use this rule to ensure all changelog entries are clear, consistent, and follow project standards when documenting new releases or changes.
+globs: 
+alwaysApply: false
+---
+# How to update the CHANGELOG
+
+This guide defines the rules for updating the [CHANGELOG.md](mdc:CHANGELOG.md) file for this project. Follow these guidelines whenever you add, modify, or release a new version.
+
+---
+
+## Structure
+
+- Each version must start with a header:
+    `vX.Y.Z - YYYY-MM-DD`
+- Changes should be grouped into sections in this order:
+    - `Added` for new features.
+    - `Changed` for changes in existing functionality.
+    - `Deprecated` for soon-to-be removed features.
+    - `Fixed` for any bug fixes.
+    - `Removed` for now removed features.
+    - `Security` in case of vulnerabilities.
+- Each item should have a short sentence, in the imperative mood, beginning with `-`.
+- The latest version comes first.
+- Always write in English.
+
+---
+
+## Best Practices
+
+- Be clear and objective. Don't include implementation details, just the impact to the user.
+- Apply the Semantic Versioning Specification (SemVer).
+- Update the release date when publishing a new version.
+- Keep the order of the sections as above.
+- Skip a section if there are no changes.
+- Highlight breaking changes with:
+    `**[Breaking Change]**` at the beginning of the item.
+- Header must start with the hierarchy level `##` and section `###`.
+
+---
+
+## Examples
+
+```markdown
+## v2.0.0 - 2025-06-01
+
+### Added
+- Add Redis
+- Support for Laravel Reverb
+
+### Changed
+- **[Breaking Change]** Move application directory from ./app to ./web
+- Upgrade Nginx to version 1.28
+
+### Fixed
+- Prevent PostgreSQL from receiving entire .env file content
+
+### Removed
+- Remove OPcache from PHP extensions
+```
+
+---
+
+## References
+
+- See the [CHANGELOG.md](mdc:CHANGELOG.md) file for real examples.
+
+---
+
+
+
+
+
+
