@@ -1,5 +1,6 @@
 ARG PHP_VERSION=8.3
-FROM php:${PHP_VERSION}-fpm-alpine
+
+FROM php:${PHP_VERSION}-fpm-alpine AS factory
 
 ARG XDEBUG_VERSION=3.3.2
 ARG REDIS_VERSION=6.1.0
@@ -12,27 +13,53 @@ RUN apk update --no-cache \
     g++ \
     libpq-dev \
     linux-headers \
-    make \
-    supervisor \
-    && pecl install \
+    make
+
+RUN pecl install \
     redis-${REDIS_VERSION} \
     xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-install \
     pcntl \
     pdo_mysql \
-    pdo_pgsql \
-    && docker-php-ext-enable \
-    redis \
-    xdebug
-
-RUN apk del \
-    autoconf \
-    g++ \
-    linux-headers \
-    make
+    pdo_pgsql
 
 RUN curl -sSL https://getcomposer.org/installer \
     | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION}
+
+ARG PHP_TEMP_DIR=/tmp/php_extensions
+
+RUN PHP_EXT_DIR=$(php-config --extension-dir) \
+    && mkdir -p ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/redis.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/xdebug.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/pcntl.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/pdo_mysql.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/pdo_pgsql.so ${PHP_TEMP_DIR}
+
+FROM php:${PHP_VERSION}-fpm-alpine
+
+RUN apk update --no-cache \
+    && apk upgrade --no-cache \
+    && apk add --no-cache \
+    supervisor \
+    libpq
+
+ARG PHP_TEMP_DIR=/tmp/php_extensions
+
+COPY --from=factory /usr/local/bin/composer /usr/local/bin/composer
+COPY --from=factory ${PHP_TEMP_DIR} ${PHP_TEMP_DIR}
+
+RUN PHP_EXT_DIR=$(php-config --extension-dir) \
+    && cp ${PHP_TEMP_DIR}/redis.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/xdebug.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/pcntl.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/pdo_mysql.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/pdo_pgsql.so ${PHP_EXT_DIR} \
+    && rm -rf ${PHP_TEMP_DIR}
+
+RUN docker-php-ext-enable \
+    redis \
+    xdebug
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"

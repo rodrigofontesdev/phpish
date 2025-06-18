@@ -1,6 +1,6 @@
 services:
   php-fpm:
-    image: phpish:1.3.0
+    image: phpish:dev
     build:
       context: ./docker
       args:
