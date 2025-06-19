@@ -1,0 +1,84 @@
+---
+description: 
+globs: Dockerfile
+alwaysApply: false
+---
+# Dockerfile Management Guide
+
+This guide provides detailed instructions for effective modifications to the [Dockerfile](mdc:docker/Dockerfile), to ensure consistency, maintainability, and adherence to best practices.
+
+---
+
+## Best Practices
+- Employ multi-stage builds for clear separation of build and runtime dependencies.
+- Combine related `RUN` commands to reduce image layers.
+- Always use `--no-cache` with `apk` for up-to-date packages.
+- Explicit version number in `pecl install` to ensure PHP version compatibility.
+- Ensure packages and extensions are installed, copied, or enabled in alphabetical order.
+
+---
+
+## Adding Dependencies or PHP Extensions
+- Add Alpine packages dependencies:  
+  `RUN apk add --no-cache <package>`.
+- Install PHP extensions:  
+  `RUN pecl install <extension>` or `RUN docker-php-ext-install <extension>`.
+- Copy `.so` files to the runtime stage as shown in the current Dockerfile.
+- Enable extensions using `docker-php-ext-enable` command.
+
+---
+
+## Updating Base Versions
+
+- Modify `ARG PHP_VERSION` at the top of the Dockerfile.
+- Update `ARG` versions (e.g., `XDEBUG_VERSION`, `REDIS_VERSION`, `COMPOSER_VERSION`).
+- Adjust in the [docker-compose.yml](mdc:docker-compose.yml) to reflect image `ARG` versions.
+
+---
+
+## Image Optimization
+- Always use base images with alpine tag.
+- Copy only essential files between build stages.
+- Copy only essential local files into the Docker image.
+- Clean up temporary files.
+
+---
+
+## Security
+- Execute as non-root user `www-data`.
+- Ensure correct permissions for directories and files.
+- Avoid exposing sensitive data or credentials.
+
+---
+
+## Testing
+- Ensure the image builds without errors.
+- Confirm all required PHP extensions are enabled.
+- Validate that composer are enabled.
+- Check if the image starts with non-root user.
+- Verify that the entrypoint (`supervisord`) starts correctly.
+
+---
+
+## Examples
+
+### Adding PHP Extension
+
+```dockerfile
+# In the build stage
+RUN pecl install <new-extension> \
+    && docker-php-ext-enable <new-extension> \
+    && cp $(php-config --extension-dir)/<new-extension>.so /tmp/php_extensions
+
+# In the runtime stage
+COPY --from=factory /tmp/php_extensions/<new-extension>.so $(php-config --extension-dir)/
+RUN docker-php-ext-enable <new-extension>
+```
+
+---
+
+## References
+
+- See the [Dockerfile](mdc:docker/Dockerfile) file for real examples.
+
+---
