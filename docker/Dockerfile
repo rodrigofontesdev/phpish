@@ -10,8 +10,10 @@ RUN apk update --no-cache \
     && apk upgrade --no-cache \
     && apk add --no-cache \
     autoconf \
-    g++ \
+    g++ \   
+    icu-dev \
     libpq-dev \
+    libzip-dev \
     linux-headers \
     make
 
@@ -19,9 +21,12 @@ RUN pecl install \
     redis-${REDIS_VERSION} \
     xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-install \
+    bcmath \
+    intl \
     pcntl \
     pdo_mysql \
-    pdo_pgsql
+    pdo_pgsql \
+    zip
 
 RUN curl -sSL https://getcomposer.org/installer \
     | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION}
@@ -30,19 +35,24 @@ ARG PHP_TEMP_DIR=/tmp/php_extensions
 
 RUN PHP_EXT_DIR=$(php-config --extension-dir) \
     && mkdir -p ${PHP_TEMP_DIR} \
-    && cp ${PHP_EXT_DIR}/redis.so ${PHP_TEMP_DIR} \
-    && cp ${PHP_EXT_DIR}/xdebug.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/bcmath.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/intl.so ${PHP_TEMP_DIR} \
     && cp ${PHP_EXT_DIR}/pcntl.so ${PHP_TEMP_DIR} \
     && cp ${PHP_EXT_DIR}/pdo_mysql.so ${PHP_TEMP_DIR} \
-    && cp ${PHP_EXT_DIR}/pdo_pgsql.so ${PHP_TEMP_DIR}
+    && cp ${PHP_EXT_DIR}/pdo_pgsql.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/redis.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/xdebug.so ${PHP_TEMP_DIR} \
+    && cp ${PHP_EXT_DIR}/zip.so ${PHP_TEMP_DIR}
 
 FROM php:${PHP_VERSION}-fpm-alpine
 
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
     && apk add --no-cache \
-    supervisor \
-    libpq
+    icu-libs \
+    libpq \
+    libzip \
+    supervisor
 
 ARG PHP_TEMP_DIR=/tmp/php_extensions
 
@@ -50,16 +60,25 @@ COPY --from=factory /usr/local/bin/composer /usr/local/bin/composer
 COPY --from=factory ${PHP_TEMP_DIR} ${PHP_TEMP_DIR}
 
 RUN PHP_EXT_DIR=$(php-config --extension-dir) \
-    && cp ${PHP_TEMP_DIR}/redis.so ${PHP_EXT_DIR} \
-    && cp ${PHP_TEMP_DIR}/xdebug.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/bcmath.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/intl.so ${PHP_EXT_DIR} \
     && cp ${PHP_TEMP_DIR}/pcntl.so ${PHP_EXT_DIR} \
     && cp ${PHP_TEMP_DIR}/pdo_mysql.so ${PHP_EXT_DIR} \
     && cp ${PHP_TEMP_DIR}/pdo_pgsql.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/redis.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/xdebug.so ${PHP_EXT_DIR} \
+    && cp ${PHP_TEMP_DIR}/zip.so ${PHP_EXT_DIR} \
     && rm -rf ${PHP_TEMP_DIR}
 
 RUN docker-php-ext-enable \
+    bcmath \
+    intl \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
     redis \
-    xdebug
+    xdebug \
+    zip
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"
