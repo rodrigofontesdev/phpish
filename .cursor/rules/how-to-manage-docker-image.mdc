@@ -67,11 +67,13 @@ This guide provides detailed instructions for effective modifications to the [Do
 ```dockerfile
 # In the build stage
 RUN pecl install <new-extension> \
-    && docker-php-ext-enable <new-extension> \
-    && cp $(php-config --extension-dir)/<new-extension>.so /tmp/php_extensions
+    && docker-php-ext-enable <new-extension>
+RUN PHP_EXT_DIR=$(php-config --extension-dir) \
+    && cp ${PHP_EXT_DIR}/<new-extension>.so /tmp/php_extensions
 
 # In the runtime stage
-COPY --from=factory /tmp/php_extensions/<new-extension>.so $(php-config --extension-dir)/
+RUN PHP_EXT_DIR=$(php-config --extension-dir) \
+    && cp /tmp/php_extensions/<new-extension>.so ${PHP_EXT_DIR}
 RUN docker-php-ext-enable <new-extension>
 ```
 
