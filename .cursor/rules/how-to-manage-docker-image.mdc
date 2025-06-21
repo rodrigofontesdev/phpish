@@ -15,6 +15,7 @@ This guide provides detailed instructions for effective modifications to the [Do
 - Always use `--no-cache` with `apk` for up-to-date packages.
 - Explicit version number in `pecl install` to ensure PHP version compatibility.
 - Ensure packages and extensions are installed, copied, or enabled in alphabetical order.
+- Document all changes in [CHANGELOG.md](mdc:CHANGELOG.md)
 
 ---
 
