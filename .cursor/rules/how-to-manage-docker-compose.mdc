@@ -1,0 +1,291 @@
+---
+description: 
+globs: docker-compose.yml
+alwaysApply: false
+---
+# Docker Compose Management Guide
+
+This guide defines the rules for modifying the [docker-compose.yml](mdc:docker-compose.yml) file in this project. Follow these guidelines whenever you need to add, update, or remove services, networks, volumes, or other Docker Compose configurations.
+
+---
+
+## Overview
+
+The docker-compose.yml file orchestrates our development environment with the following services:
+- **php-fpm**: PHP application server with custom build
+- **nginx**: Web server for serving the application
+- **node**: Node.js environment for frontend assets
+- **postgres**: PostgreSQL database server
+- **redis**: Redis cache server
+
+Related files:
+- [Dockerfile](mdc:docker/Dockerfile): Defines the PHP image build
+- [nginx.conf](mdc:docker/nginx/nginx.conf): Nginx configuration
+- [php.ini](mdc:docker/php/php.ini): PHP configuration
+
+---
+
+## General Guidelines
+
+- Use 2-space indentation for all entries
+- Use kebab-case for service, network, and volume names
+- Group related services together
+- List services in order of dependency (base services first)
+- Always include descriptive healthchecks for services
+- Define explicit dependencies using depends_on
+- Use environment variables or secrets for sensitive information
+- Document non-obvious configurations with comments
+- Specify exact versions for all services (e.g., postgres:17-alpine not postgres:latest)
+- Document version changes in CHANGELOG.md
+
+---
+
+## Service Structure
+
+### Required Fields
+Each service must include:
+- image or build specification
+- network attachment
+- appropriate healthcheck
+
+### Volume Mounts
+- Use relative paths for local directories
+- Mount application code to /var/www/html
+- Use named volumes for persistent data
+
+### Port Mapping
+- Format as HOST:CONTAINER
+- Avoid conflicts with standard ports (80, 443, etc.)
+- Document port purpose in comments if not obvious
+
+---
+
+## Service-Specific Guidelines
+
+### PHP-FPM Service
+
+The php-fpm service is built from a custom Dockerfile:
+
+```yaml
+php-fpm:
+  image: phpish:dev
+  build:
+    context: ./docker
+    args:
+      PHP_VERSION: 8.3
+      COMPOSER_VERSION: 2.8.9
+      XDEBUG_VERSION: 3.3.2
+      REDIS_VERSION: 6.1.0
+```
+
+#### Build Arguments
+- When updating PHP version, ensure compatibility with extensions
+- When updating extensions, check compatibility with PHP version
+- Document all version changes in CHANGELOG.md
+
+#### Volume Mounting
+- Always mount ./web:/var/www/html for application code
+
+#### Health Check
+- Use php-fpm -t for health checks
+
+---
+
+### Nginx Service
+
+```yaml
+nginx:
+  image: nginx:1.28-alpine
+  volumes:
+    - ./web:/var/www/html
+    - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+```
+
+#### Configuration
+- Always mount the nginx.conf file to /etc/nginx/conf.d/default.conf
+- Mount the same application directory as php-fpm
+
+#### Port Mapping
+- Map port 80 to host port 80 by default
+
+#### Dependencies
+- Always depend on php-fpm service
+
+---
+
+### Node Service
+
+```yaml
+node:
+  image: node:22-alpine
+  working_dir: /var/www/html
+  user: node
+  volumes:
+    - ./web:/var/www/html
+```
+
+#### Configuration
+- Set working_dir to /var/www/html
+- Use node user for security
+- Use sleep infinity command for long-running container
+
+---
+
+### Postgres Service
+
+```yaml
+postgres:
+  image: postgres:17-alpine
+  volumes:
+    - postgres-data:/var/lib/postgresql/data
+  environment:
+    POSTGRES_DB_FILE: /run/secrets/DB_DATABASE
+    POSTGRES_USER_FILE: /run/secrets/DB_USERNAME
+    POSTGRES_PASSWORD_FILE: /run/secrets/DB_PASSWORD
+```
+
+#### Data Persistence
+- Always use named volume for data
+- Never mount host directory directly to /var/lib/postgresql/data
+
+#### Secrets Management
+- Use _FILE environment variables with secrets
+- Define corresponding secrets in the secrets section
+
+---
+
+### Redis Service
+
+```yaml
+redis:
+  image: redis:8-alpine
+  volumes:
+    - redis-data:/data
+```
+
+#### Data Persistence
+- Use named volume for data persistence
+- Mount to /data in the container
+
+---
+
+## Networks and Volumes
+
+### Networks
+
+```yaml
+networks:
+  mainnet:
+```
+
+- Use mainnet as the primary network
+- Create additional networks only when isolation is required
+
+### Volumes
+
+```yaml
+volumes:
+  postgres-data:
+  redis-data:
+```
+
+- Use service-name-data naming convention
+- Define all persistent volumes in the volumes section
+- Do not use external volumes unless necessary
+
+---
+
+## Secrets Management
+
+```yaml
+secrets:
+  DB_DATABASE:
+    environment: DB_DATABASE
+  DB_USERNAME:
+    environment: DB_USERNAME
+  DB_PASSWORD:
+    environment: DB_PASSWORD
+```
+
+- Use environment variables as the source for secrets
+- Reference secrets in services using _FILE suffix for environment variables
+- Mount secrets to appropriate paths in the container
+
+---
+
+## Examples
+
+### Example 1: Adding a New Service
+
+To add a new service (e.g., Mailhog for email testing):
+
+```yaml
+mailhog:
+  image: mailhog/mailhog:v1.0.1
+  ports:
+    - 1025:1025
+    - 8025:8025
+  networks:
+    - mainnet
+  healthcheck:
+    test: ["CMD", "nc", "-z", "localhost", "8025"]
+    interval: 30s
+    timeout: 10s
+    retries: 5
+    start_period: 10s
+```
+
+### Example 2: Updating a Service Version
+
+To update PHP version from 8.3 to 8.4:
+
+```yaml
+php-fpm:
+  image: phpish:dev
+  build:
+    context: ./docker
+    args:
+      PHP_VERSION: 8.4  # Updated from 8.3
+      COMPOSER_VERSION: 2.8.9
+      XDEBUG_VERSION: 3.3.2
+      REDIS_VERSION: 6.1.0
+```
+
+Remember to:
+1. Test compatibility with all extensions
+2. Update CHANGELOG.md with the version change
+
+### Example 3: Adding Environment Variables
+
+To add environment variables to a service:
+
+```yaml
+php-fpm:
+  # ... existing configuration ...
+  environment:
+    APP_ENV: development
+    APP_DEBUG: "true"
+    REDIS_HOST: redis
+```
+
+### Example 4: Adding a Volume
+
+To add a new volume for a service:
+
+```yaml
+services:
+  new-service:
+    # ... service configuration ...
+    volumes:
+      - new-service-data:/path/in/container
+
+volumes:
+  # ... existing volumes ...
+  new-service-data:
+```
+
+---
+
+## References
+
+- See the [docker-compose.yml](mdc:docker-compose.yml) file for real examples
