@@ -1,5 +1,5 @@
 ---
-description: Use this rule to ensure all changelog entries are clear, consistent, and follow project standards when documenting new releases or changes.
+description: Apply this rule when updating CHANGELOG.md to maintain clear version history, ensure consistent formatting across entries, and follow semantic versioning standards for releases and breaking changes.
 globs: 
 alwaysApply: false
 ---
