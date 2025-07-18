@@ -13,6 +13,11 @@ The project is currently preparing for a major v2.0.0 release with significant b
 
 ## Recent Changes
 
+### Documentation Rules Established ✅
+- **README Update Rules**: Created `.cursor/rules/how-to-update-docs.mdc` with guidelines for maintaining README.md accuracy
+- **CHANGELOG Update Rules**: Created `.cursor/rules/how-to-update-changelog.mdc` with standards for version history documentation
+- **Project Intelligence**: Established clear guidelines for documentation maintenance and consistency
+
 ### Memory Bank Initialization ✅
 - **Complete Documentation**: Established comprehensive memory bank with all core files
 - **Project Intelligence**: Captured current architecture, patterns, and development context
@@ -74,11 +79,12 @@ High priority TODO items from README.md:
 
 ## Current Priorities
 
-1. **Release Documentation**: Complete all TODO sections in README
-2. **Testing**: Validate all breaking changes work correctly  
-3. **Migration Support**: Ensure smooth upgrade path from v1.x
-4. **Performance Validation**: Confirm image size optimizations are effective
-5. **Memory Bank Maintenance**: Keep project documentation current and comprehensive
+1. **Documentation Standards Implementation**: Apply new documentation rules to existing content
+2. **Release Documentation**: Complete all TODO sections in README using established guidelines
+3. **Testing**: Validate all breaking changes work correctly  
+4. **Migration Support**: Ensure smooth upgrade path from v1.x
+5. **Performance Validation**: Confirm image size optimizations are effective
+6. **Memory Bank Maintenance**: Keep project documentation current and comprehensive
 
 ## Known Considerations
 
