@@ -1,0 +1,84 @@
+---
+description: Apply this rule when updating README.md to maintain documentation accuracy, ensure consistent formatting across sections, and keep the memory-bank synchronized with project changes.
+alwaysApply: false
+---
+# How to update the README
+
+This rule provides guidelines for updating the [README.md](mdc:README.md) file to ensure it remains accurate, consistent, and aligned with the project's evolution.
+
+## 1. When to Update README.md
+
+It should be updated whenever a change impacts the developer experience, project scope, or setup process. Key triggers include:
+
+- **Adding a new feature** (e.g., adding a new service like Mailpit).
+- **Updating a service version** (e.g., upgrading from PHP 8.3 to 8.4).
+- **Changing a configuration** (e.g., modifying a port or a command).
+- **Completing a `TODO` item** from the "How to Use" section.
+- **Deprecating a feature**.
+
+## 2. Updating Key Sections
+
+Follow these guidelines to maintain consistency across the document.
+
+### `Features` Section
+
+When a new feature is successfully implemented and tested, add it to the features list.
+
+- **Action**: Add a new line with the format ` - [x] Feature Name`.
+- **Example**: If you add support for `Laravel Octane`, add the line ` - [x] Laravel Octane`.
+
+### `How to Use` Section
+
+This section is critical for usability. When completing a `TODO` item, replace the placeholder with clear, actionable instructions.
+
+- **Action**: Remove the `> [!IMPORTANT] > TODO` block and add a detailed guide.
+- **Provide code snippets** for commands.
+- **Explain the purpose** of the steps.
+
+**Example: Replacing a `TODO` for "Use PostgreSQL as Database"**
+
+**Before:**
+```markdown
+### Use PostgreSQL as Database
+
+> [!IMPORTANT]
+> TODO
+```
+
+**After:**
+```markdown
+### Use PostgreSQL as Database
+
+To connect your Laravel application to the PostgreSQL database, update the following environment variables in your `.env` file:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=postgresql
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=laravel
+```
+
+The `DB_HOST` is the name of the PostgreSQL service defined in `docker-compose.yml`. After updating the `.env` file, clear the configuration cache:
+
+```sh
+docker exec -it <your-php-container-name> php artisan config:cache
+```
+```
+
+### `Coming Soon` Section
+
+This section manages expectations for future features.
+
+- When a planned feature is implemented, **remove it** from `Coming Soon` and **add it** to the `Features` list.
+- **Action**: Delete the line ` - [ ] Planned Feature` from this section.
+
+## 3. Pre-Commit Checklist
+
+Before committing any changes to `README.md`, ensure the following:
+
+- **Verify Commands**: All new commands have been tested and work as described.
+- **Check Links**: All internal and external links are valid.
+- **Update `CHANGELOG.md`**: If the change is significant (new feature, breaking change), add an entry to `CHANGELOG.md` following its own guidelines.
+- **Review `memory-bank`**: Ensure that the changes are reflected in the relevant `memory-bank` files, especially `activeContext.md` and `progress.md`.
