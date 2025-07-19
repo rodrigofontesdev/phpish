@@ -6,7 +6,7 @@ alwaysApply: false
 
 This rule provides guidelines for updating the [README.md](mdc:README.md) file to ensure it remains accurate, consistent, and aligned with the project's evolution.
 
-## 1. When to Update README.md
+## When to Update
 
 It should be updated whenever a change impacts the developer experience, project scope, or setup process. Key triggers include:
 
@@ -16,7 +16,7 @@ It should be updated whenever a change impacts the developer experience, project
 - **Completing a `TODO` item** from the "How to Use" section.
 - **Deprecating a feature**.
 
-## 2. Updating Key Sections
+## Updating Key Sections
 
 Follow these guidelines to maintain consistency across the document.
 
@@ -65,7 +65,6 @@ The `DB_HOST` is the name of the PostgreSQL service defined in `docker-compose.y
 ```sh
 docker exec -it <your-php-container-name> php artisan config:cache
 ```
-```
 
 ### `Coming Soon` Section
 
@@ -74,11 +73,9 @@ This section manages expectations for future features.
 - When a planned feature is implemented, **remove it** from `Coming Soon` and **add it** to the `Features` list.
 - **Action**: Delete the line ` - [ ] Planned Feature` from this section.
 
-## 3. Pre-Commit Checklist
+## Pre-Commit Checklist
 
 Before committing any changes to `README.md`, ensure the following:
 
 - **Verify Commands**: All new commands have been tested and work as described.
 - **Check Links**: All internal and external links are valid.
-- **Update `CHANGELOG.md`**: If the change is significant (new feature, breaking change), add an entry to `CHANGELOG.md` following its own guidelines.
-- **Review `memory-bank`**: Ensure that the changes are reflected in the relevant `memory-bank` files, especially `activeContext.md` and `progress.md`.
