@@ -1,13 +1,9 @@
 ---
-description: Apply this rule when updating CHANGELOG.md to maintain clear version history, ensure consistent formatting across entries, and follow semantic versioning standards for releases and breaking changes.
-globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 # How to update the CHANGELOG
 
 This guide defines the rules for updating the [CHANGELOG.md](mdc:CHANGELOG.md) file for this project. Follow these guidelines whenever you add, modify, or release a new version.
-
----
 
 ## Structure
 
@@ -24,8 +20,6 @@ This guide defines the rules for updating the [CHANGELOG.md](mdc:CHANGELOG.md) f
 - The latest version comes first.
 - Always write in English.
 
----
-
 ## Best Practices
 
 - Be clear and objective. Don't include implementation details, just the impact to the user.
@@ -36,8 +30,6 @@ This guide defines the rules for updating the [CHANGELOG.md](mdc:CHANGELOG.md) f
 - Highlight breaking changes with:
     `**[Breaking Change]**` at the beginning of the item.
 - Header must start with the hierarchy level `##` and section `###`.
-
----
 
 ## Examples
 
@@ -59,10 +51,6 @@ This guide defines the rules for updating the [CHANGELOG.md](mdc:CHANGELOG.md) f
 - Remove OPcache from PHP extensions
 ```
 
----
-
 ## References
 
 - See the [CHANGELOG.md](mdc:CHANGELOG.md) file for real examples.
-
----
