@@ -7,8 +7,6 @@ alwaysApply: false
 
 This guide provides detailed instructions for effective modifications to the [Dockerfile](mdc:docker/Dockerfile), to ensure consistency, maintainability, and adherence to best practices.
 
----
-
 ## Best Practices
 - Employ multi-stage builds for clear separation of build and runtime dependencies.
 - Combine related `RUN` commands to reduce image layers.
@@ -16,8 +14,6 @@ This guide provides detailed instructions for effective modifications to the [Do
 - Explicit version number in `pecl install` to ensure PHP version compatibility.
 - Ensure packages and extensions are installed, copied, or enabled in alphabetical order.
 - Document all changes in [CHANGELOG.md](mdc:CHANGELOG.md)
-
----
 
 ## Adding Dependencies or PHP Extensions
 - Add Alpine packages dependencies:  
@@ -27,15 +23,11 @@ This guide provides detailed instructions for effective modifications to the [Do
 - Copy `.so` files to the runtime stage as shown in the current Dockerfile.
 - Enable extensions using `docker-php-ext-enable` command.
 
----
-
 ## Updating Base Versions
 
 - Modify `ARG PHP_VERSION` at the top of the Dockerfile.
 - Update `ARG` versions (e.g., `XDEBUG_VERSION`, `REDIS_VERSION`, `COMPOSER_VERSION`).
 - Adjust in the [docker-compose.yml](mdc:docker-compose.yml) to reflect image `ARG` versions.
-
----
 
 ## Image Optimization
 - Always use base images with alpine tag.
@@ -43,14 +35,10 @@ This guide provides detailed instructions for effective modifications to the [Do
 - Copy only essential local files into the Docker image.
 - Clean up temporary files.
 
----
-
 ## Security
 - Execute as non-root user `www-data`.
 - Ensure correct permissions for directories and files.
 - Avoid exposing sensitive data or credentials.
-
----
 
 ## Testing
 - Ensure the image builds without errors.
@@ -58,8 +46,6 @@ This guide provides detailed instructions for effective modifications to the [Do
 - Validate that composer are enabled.
 - Check if the image starts with non-root user.
 - Verify that the entrypoint (`supervisord`) starts correctly.
-
----
 
 ## Examples
 
@@ -78,10 +64,6 @@ RUN PHP_EXT_DIR=$(php-config --extension-dir) \
 RUN docker-php-ext-enable <new-extension>
 ```
 
----
-
 ## References
 
 - See the [Dockerfile](mdc:docker/Dockerfile) file for real examples.
-
----
