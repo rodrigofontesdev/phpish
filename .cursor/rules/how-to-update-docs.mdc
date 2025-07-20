@@ -8,74 +8,124 @@ This rule provides guidelines for updating the [README.md](mdc:README.md) file t
 
 ## When to Update
 
-It should be updated whenever a change impacts the developer experience, project scope, or setup process. Key triggers include:
+Update the README whenever a change impacts project setup, scope, or developer experience. Key triggers include:
 
-- **Adding a new feature** (e.g., adding a new service like Mailpit).
-- **Updating a service version** (e.g., upgrading from PHP 8.3 to 8.4).
-- **Changing a configuration** (e.g., modifying a port or a command).
-- **Completing a `TODO` item** from the "How to Use" section.
-- **Deprecating a feature**.
+- **Adding a feature**: A new service, tool, or capability is integrated (e.g., adding Mailpit).
+- **Changing functionality**: A core behavior, configuration, or command is modified (e.g., changing a port).
+- **Updating a version**: A key technology is upgraded (e.g., PHP 8.3 to 8.4).
+- **Completing a guide**: A `TODO` item in the "How to Use" section is resolved.
+- **Removing a feature**: A service or functionality is fully removed from the project.
+- **Deprecating a feature**: A feature is marked for future removal.
 
-## Updating Key Sections
+## Structure
+
+The README.md must follow a standardized structure with the following sections in the exact order listed below. This structure ensures consistency across the project documentation and provides a clear user experience:
+
+1. **Project Title & Overview** - The main heading (`# Title`) followed by a brief project description.
+2. **Prerequisites** - Lists all software and dependencies required before setup.
+3. **Getting Started** - Provides the essential steps to get the project running quickly.
+4. **Features** - Showcases key capabilities and included technologies.
+5. **How to Use** - Explains detailed usage with practical examples and guides.
+6. **Coming Soon** - Outlines the project roadmap and planned features.
+7. **Built With** - Mentions the core technologies used to build the project.
+8. **License** - Specifies the project's license and usage terms.
+
+### Structure Rules:
+
+- **Title & Overview**: The document must start with the project title (`# Title`), immediately followed by its overview.
+- **Section Order**: All sections must appear in the exact order listed above.
+- **Headers**: Use `##` for main sections and `###` for subsections.
+- **Completeness**: All sections must be present, even if some have minimal content initially.
+- **Consistency**: Keep formatting, tone, and style consistent throughout the document.
+
+## Sections
 
 Follow these guidelines to maintain consistency across the document.
 
+### `Prerequisites` Section
+
+List only essential requirements needed before setup. Keep it minimal and focused.
+
+**Guidelines:**
+- Use `-   ` (dash with 3 spaces) for list items.
+- List only truly essential requirements.
+- Avoid version numbers unless absolutely necessary.
+
+### `Getting Started` Section
+
+Provide the quickest path to get the project running. Focus on essential commands only.
+
+**Guidelines:**
+- Use actual project examples in commands.
+- Include reference to "How to Use" section.
+- Keep commands minimal and essential only.
+
 ### `Features` Section
 
-When a new feature is successfully implemented and tested, add it to the features list.
+Maintain a comprehensive list of implemented features using checkboxes.
 
-- **Action**: Add a new line with the format ` - [x] Feature Name`.
-- **Example**: If you add support for `Laravel Octane`, add the line ` - [x] Laravel Octane`.
+**Guidelines:**
+- **Implemented features**: Use `- [x] Feature Name` format.
+- **Order**: List features logically (core technologies first, then tools/utilities).
+- **Naming**: Use concise but descriptive names.
+- **Version numbers**: Include when relevant (e.g., `PHP 8.3`, `PostgreSQL 16`).
 
 ### `How to Use` Section
 
-This section is critical for usability. When completing a `TODO` item, replace the placeholder with clear, actionable instructions.
+This section provides detailed, practical guides for project features.
 
-- **Action**: Remove the `> [!IMPORTANT] > TODO` block and add a detailed guide.
-- **Provide code snippets** for commands.
-- **Explain the purpose** of the steps.
-
-**Example: Replacing a `TODO` for "Use PostgreSQL as Database"**
-
-**Before:**
-```markdown
-### Use PostgreSQL as Database
-
-> [!IMPORTANT]
-> TODO
-```
-
-**After:**
-```markdown
-### Use PostgreSQL as Database
-
-To connect your Laravel application to the PostgreSQL database, update the following environment variables in your `.env` file:
-
-```env
-DB_CONNECTION=pgsql
-DB_HOST=postgresql
-DB_PORT=5432
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=laravel
-```
-
-The `DB_HOST` is the name of the PostgreSQL service defined in `docker-compose.yml`. After updating the `.env` file, clear the configuration cache:
-
-```sh
-docker exec -it <your-php-container-name> php artisan config:cache
-```
+- **Structure**: Use a `###` heading for the guide's title and start with a brief introductory paragraph.
+- **Clarity**: Explain the guide's purpose before giving clear, step-by-step instructions.
+- **Accuracy**: Use real service names (e.g., `example-app-php-fpm-1`) and correct syntax highlighting in all code examples.
+- **Validation**: Conclude with commands or steps to verify that the process was successful.
 
 ### `Coming Soon` Section
 
-This section manages expectations for future features.
+This section manages expectations for future features and planned improvements.
 
-- When a planned feature is implemented, **remove it** from `Coming Soon` and **add it** to the `Features` list.
-- **Action**: Delete the line ` - [ ] Planned Feature` from this section.
+**Guidelines:**
+- **Feature completed**: Remove from `Coming Soon` and add to `Features` with `- [x]`.
+- **New plans**: Add new items with `- [ ] Feature Name`.
+- **Changed priorities**: Reorder items as needed.
+
+### `Built With` Section
+
+List the core technologies that power the project.
+
+**Guidelines:**
+- **Keep minimal**: Focus on primary technologies only.
+- **Use simple format**: Just `- Technology Name`.
+- **No versions**: Avoid version numbers here (use Features section for that).
+
+### `License` Section
+
+Standard license reference with link to license file.
+
+**Guidelines:**
+- Always reference the actual license file.
+- Use consistent wording across projects.
+- Update license type if changed.
 
 ## Pre-Commit Checklist
 
 Before committing any changes to `README.md`, ensure the following:
 
-- **Verify Commands**: All new commands have been tested and work as described.
-- **Check Links**: All internal and external links are valid.
+### Structure and Format
+- **Section order**: All sections appear in the correct order
+- **Headers**: Proper use of `#`, `##`, and `###` hierarchy  
+- **Checkboxes**: Features use `- [x]`, coming soon use `- [ ]`
+- **Code blocks**: All code blocks specify language (`sh`, `env`, etc.)
+- **Callouts**: Proper use of `> [!NOTE]` and `> [!IMPORTANT]` syntax
+
+### Content Quality
+- **Commands tested**: All new commands have been tested and work as described
+- **Container names**: Use actual service names (e.g., `example-app-php-fpm-1`)
+- **Links verified**: All internal and external links are valid and working
+- **TODO completion**: If replacing TODO items, ensure complete guides with context
+- **Examples accurate**: All code examples reflect actual project setup
+
+### Consistency
+- **Formatting**: Consistent use of bold text (`**project names**`, `**service names**`)
+- **List spacing**: Proper spacing in lists (`-   ` with 3 spaces)
+- **Link format**: Consistent internal links and file references
+- **Language**: Clear, actionable language throughout
