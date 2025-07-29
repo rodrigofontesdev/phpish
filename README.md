@@ -39,6 +39,12 @@ git clone git@github.com:rodrigofontesdev/phpish.git example-app
 cd example-app
 ```
 
+Copy the environment configuration file:
+
+```sh
+cp .env.example .env
+```
+
 Run Docker services:
 
 ```sh
