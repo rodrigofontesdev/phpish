@@ -1,5 +1,6 @@
 .cursor
 /docker/Dockerfile
+memory-bank/
 docker-compose.yml
 .git
 .gitignore
