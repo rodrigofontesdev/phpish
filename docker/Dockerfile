@@ -83,11 +83,13 @@ RUN docker-php-ext-enable \
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN rm "$PHP_INI_DIR/php.ini-production"
 
-COPY /php/php.ini "$PHP_INI_DIR/conf.d/99_extra.ini"
-COPY /supervisord/supervisord.conf /etc/supervisord.conf
+COPY php/php.ini "$PHP_INI_DIR/conf.d/99_extra.ini"
+COPY supervisord/supervisord.conf /etc/supervisord.conf
 
 RUN chown -R www-data:www-data /var/log /run
 
 USER www-data
+
+ENV PATH="/home/www-data/.composer/vendor/bin:$PATH"
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
