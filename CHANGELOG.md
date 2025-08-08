@@ -24,6 +24,8 @@
 
 - Prevent PostgreSQL from receiving entire .env file content
 - Load missing PHP extensions
+- Laravel installer command
+- Copy correct php.ini and supervisord.conf paths
 
 ## v1.3.0 - 2025-05-22
 
