@@ -73,6 +73,12 @@ In this part, you will learn how to work properly with the **PHPISH** and be abl
 > [!NOTE]
 > It's not necessary to push the **PHPISH** files to your project's remote repository.
 
+> [!IMPORTANT]
+> Your application should reside inside the `/web` directory.
+
+> [!WARNING]
+> To execute npm commands you must open a terminal in the **node service**.
+
 ### Install Laravel With Composer
 
 Open an interactive shell for the **php-fpm service**:
@@ -103,10 +109,16 @@ Install the Laravel Installer globally:
 composer global require laravel/installer
 ```
 
-Create a new project:
+Create a new project in a temporary directory:
 
 ```sh
-laravel new .
+laravel new tmp
+```
+
+Move all files to the project root directory:
+
+```sh
+mv tmp/* .; mv tmp/.??* .; rmdir tmp
 ```
 
 After the installation finish, open your browser and visit [http://localhost](http://localhost).
@@ -116,20 +128,19 @@ After the installation finish, open your browser and visit [http://localhost](ht
 Ensure that you have the following folder structure:
 
 ```
-example-app/
-├── web/                <-- Your Laravel project goes here
+phpish/
+├── web/                <-- Your project goes here
 │   ├── public/
 │   │   └── index.php
 │   └── ...
 ├── docker/
-├── docker-compose.yml
-└── README.md
+└── docker-compose.yml
 ```
 
-Clone your existing Laravel project directly into the `web` directory:
+Clone your existing project directly into the `web` directory:
 
 ```sh
-git clone git@github.com:username/repo-name.git web
+git clone git@github.com:{username}/{repo}.git web
 ```
 
 Open an interactive shell for the **php-fpm service**:
@@ -195,7 +206,7 @@ php-fpm:
 After making changes, rebuild the image:
 
 ```sh
-docker compose up -d --build
+docker compose up -d --build # testar com restart
 ```
 
 ### Add New PHP Extensions
